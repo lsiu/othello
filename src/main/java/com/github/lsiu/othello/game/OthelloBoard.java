@@ -8,7 +8,7 @@ public class OthelloBoard {
     public static final int HEIGHT = 8;
     private LocationStatus[][] board = new LocationStatus[HEIGHT][WIDTH];
 
-    public void newGame() {
+    OthelloBoard() {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 board[i][j] = LocationStatus.EMPTY;
@@ -22,6 +22,14 @@ public class OthelloBoard {
 
     public void mark(Location location, LocationStatus status) {
         board[location.getRow()][location.getCol()] = status;
+    }
+
+    OthelloBoard copy() {
+        OthelloBoard othelloBoard = new OthelloBoard();
+        for (int i = 0; i < board.length; i++) {
+            System.arraycopy(board[i], 0, othelloBoard.board[i], 0, board[i].length);
+        }
+        return othelloBoard;
     }
 
     public LocationStatus get(int col, int row) {

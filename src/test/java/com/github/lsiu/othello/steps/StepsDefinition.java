@@ -1,5 +1,6 @@
 package com.github.lsiu.othello.steps;
 
+import com.github.lsiu.othello.game.GameException;
 import cucumber.api.java8.En;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
@@ -23,5 +24,10 @@ public class StepsDefinition implements En {
         Then("^shell output contains:$", (String expectedOutput) ->
                 Assert.assertThat(shellResult, CoreMatchers.equalTo(expectedOutput))
         );
+
+        Then("^expect game exception with message (.*)$", (String message) -> {
+            Assert.assertThat(shellResult, CoreMatchers.instanceOf(GameException.class));
+            Assert.assertThat(((GameException) shellResult).getMessage(), CoreMatchers.equalTo(message));
+        });
     }
 }
