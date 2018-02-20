@@ -33,7 +33,11 @@ Feature: Valid Moves
     """
 
     When move e7 command entered
-    Then expect game exception with message Invalid move. Please try again.
+    Then expect game exception with message:
+    """
+    Player 'X' move: e7
+    Invalid move. Please try again.
+    """
 
     When move e6 command entered
     Then shell output contains:

@@ -25,7 +25,7 @@ public class StepsDefinition implements En {
                 Assert.assertThat(shellResult, CoreMatchers.equalTo(expectedOutput))
         );
 
-        Then("^expect game exception with message (.*)$", (String message) -> {
+        Then("^expect game exception with message:$", (String message) -> {
             Assert.assertThat(shellResult, CoreMatchers.instanceOf(GameException.class));
             Assert.assertThat(((GameException) shellResult).getMessage(), CoreMatchers.equalTo(message));
         });

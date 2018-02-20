@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 public class OthelloGame {
 
+    private final LocationConverter locationConverter = new LocationConverter();
     private OthelloBoard board;
     private LocationStatus turn;
 
@@ -18,11 +19,12 @@ public class OthelloGame {
         return new OthelloGame();
     }
 
-    public void move(Location location) {
+    public void move(String move) {
+        Location location = locationConverter.convert(move);
         OthelloBoard othelloBoard = board.copy();
         boolean piecesTurned = TurnSurroundingPiecesUtils.turnSurroundingPieces(othelloBoard, location, turn);
         if (!piecesTurned) {
-            throw new GameException("Invalid move. Please try again.");
+            throw new GameException(String.format("Player '%s' move: %s\nInvalid move. Please try again.", turn, move));
         }
         othelloBoard.mark(location, turn);
         board = othelloBoard;
