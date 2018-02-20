@@ -5,11 +5,11 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
 @ShellComponent
-public class NewGameController {
+public class GameController {
 
     private final OthelloBoard othelloBoard;
 
-    public NewGameController(OthelloBoard othelloBoard) {
+    public GameController(OthelloBoard othelloBoard) {
         this.othelloBoard = othelloBoard;
     }
 

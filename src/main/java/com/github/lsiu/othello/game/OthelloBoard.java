@@ -4,7 +4,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OthelloBoard {
-    private LocationStatus[][] board = new LocationStatus[8][8];
+    public static final int WIDTH = 8;
+    public static final int HEIGHT = 8;
+    private LocationStatus[][] board = new LocationStatus[HEIGHT][WIDTH];
 
     public void newGame() {
         for (int i = 0; i < board.length; i++) {
@@ -16,6 +18,18 @@ public class OthelloBoard {
         board[4][4] = LocationStatus.WHITE;
         board[3][4] = LocationStatus.BLACK;
         board[4][3] = LocationStatus.BLACK;
+    }
+
+    public void mark(Location location, LocationStatus status) {
+        board[location.getRow()][location.getCol()] = status;
+    }
+
+    public LocationStatus get(int col, int row) {
+        return board[row][col];
+    }
+
+    public LocationStatus get(Location location) {
+        return get(location.getCol(), location.getRow());
     }
 
     @Override
