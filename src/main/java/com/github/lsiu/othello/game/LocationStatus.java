@@ -23,4 +23,7 @@ public enum LocationStatus {
         return display;
     }
 
+    public LocationStatus opposite() {
+        return this == BLACK ? WHITE : BLACK;
+    }
 }
