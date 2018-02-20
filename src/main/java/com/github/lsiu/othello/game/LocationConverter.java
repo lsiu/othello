@@ -1,9 +1,7 @@
 package com.github.lsiu.othello.game;
 
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.stereotype.Component;
 
-@Component
 public class LocationConverter implements Converter<String, Location> {
     @Override
     public Location convert(String s) {
