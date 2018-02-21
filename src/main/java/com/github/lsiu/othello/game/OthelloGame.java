@@ -10,25 +10,34 @@ public class OthelloGame {
     private OthelloBoard board;
     private LocationStatus turn;
 
-    private OthelloGame() {
-        board = new OthelloBoard();
-        turn = LocationStatus.BLACK;
+    public OthelloGame() {
+        this(new OthelloBoard(), LocationStatus.BLACK);
     }
 
-    public static OthelloGame newGame() {
-        return new OthelloGame();
+    public OthelloGame(OthelloBoard board, LocationStatus turn) {
+        this.board = board;
+        this.turn = turn;
     }
 
     public void move(String move) {
         Location location = locationConverter.convert(move);
+        if (board.get(location) != LocationStatus.EMPTY) {
+            throwExceptionOnInvalidMove(move);
+            return;
+        }
+
         OthelloBoard othelloBoard = board.copy();
         boolean piecesTurned = TurnSurroundingPiecesUtils.turnSurroundingPieces(othelloBoard, location, turn);
         if (!piecesTurned) {
-            throw new GameException(String.format("Player '%s' move: %s\nInvalid move. Please try again.", turn, move));
+            throwExceptionOnInvalidMove(move);
         }
         othelloBoard.mark(location, turn);
         board = othelloBoard;
         turn = turn.opposite();
+    }
+
+    private void throwExceptionOnInvalidMove(String move) {
+        throw new GameException(String.format("Player '%s' move: %s\nInvalid move. Please try again.", turn, move));
     }
 
 

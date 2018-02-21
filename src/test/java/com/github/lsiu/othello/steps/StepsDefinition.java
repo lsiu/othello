@@ -1,6 +1,7 @@
 package com.github.lsiu.othello.steps;
 
-import com.github.lsiu.othello.game.GameException;
+import com.github.lsiu.othello.GameController;
+import com.github.lsiu.othello.game.*;
 import cucumber.api.java8.En;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
@@ -14,9 +15,19 @@ public class StepsDefinition implements En {
     @Autowired
     private Shell shell;
 
+    @Autowired
+    private GameController gameController;
+
     private Object shellResult;
 
+
     public StepsDefinition() {
+        Given("^this is the state of the game and is (.*) turn$", (LocationStatus turn, String board) -> {
+                    OthelloBoard othelloBoard = TestUtils.setupBoard(board);
+                    gameController.setOthelloGame(new OthelloGame(othelloBoard, turn));
+                }
+        );
+
         When("^(.*) command entered$", (String command) ->
                 shellResult = shell.evaluate(() -> command)
         );
