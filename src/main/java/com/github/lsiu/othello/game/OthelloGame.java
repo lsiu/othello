@@ -25,14 +25,14 @@ public class OthelloGame {
     public void move(String move) {
         Location location = locationConverter.convert(move);
         if (board.get(location) != LocationStatus.EMPTY) {
-            throwExceptionOnInvalidMove(move);
+            MoveDisplayUtils.throwExceptionOnInvalidMove(move, turn);
             return;
         }
 
         OthelloBoard othelloBoard = board.copy();
         boolean piecesTurned = TurnSurroundingPiecesUtils.turnSurroundingPieces(othelloBoard, location, turn);
         if (!piecesTurned) {
-            throwExceptionOnInvalidMove(move);
+            MoveDisplayUtils.throwExceptionOnInvalidMove(move, turn);
         }
         othelloBoard.mark(location, turn);
         board = othelloBoard;
@@ -46,29 +46,17 @@ public class OthelloGame {
                 int xCount = CountPiecesUtils.count(board, LocationStatus.fromDisplayString("X"));
                 int oCount = CountPiecesUtils.count(board, LocationStatus.fromDisplayString("O"));
                 if (xCount > oCount) {
-                    throwWinningMessage(LocationStatus.DARK, xCount, oCount, move);
+                    MoveDisplayUtils.throwWinningMessage(LocationStatus.DARK, xCount, oCount, move, turn, board);
                 } else if (xCount == oCount) {
                     String moveOutput = MoveDisplayUtils.generateMoveOutput(move, turn, board);
                     throw new GameException(String.format("%s\n\n" +
                             "No further moves available\n" +
                             "Game tied ( %s vs %s )", moveOutput, xCount, oCount));
                 } else {
-                    throwWinningMessage(LocationStatus.LIGHT, oCount, xCount, move);
+                    MoveDisplayUtils.throwWinningMessage(LocationStatus.LIGHT, oCount, xCount, move, turn, board);
                 }
             }
         }
-    }
-
-    private void throwWinningMessage(LocationStatus winner, int winnerCount, int loserCount, String move) {
-        String moveOutput = MoveDisplayUtils.generateMoveOutput(move, turn, board);
-        throw new GameException(String.format("%s\n\n" +
-                        "No further moves available\n" +
-                        "Player '%s' wins ( %s vs %s )", moveOutput, winner,
-                winnerCount, loserCount));
-    }
-
-    private void throwExceptionOnInvalidMove(String move) {
-        throw new GameException(String.format("Player '%s' move: %s\nInvalid move. Please try again.", turn, move));
     }
 
 
