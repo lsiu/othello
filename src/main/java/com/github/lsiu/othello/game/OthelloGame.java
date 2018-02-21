@@ -67,16 +67,6 @@ public class OthelloGame {
                 winnerCount, loserCount));
     }
 
-    private LocationStatus determineWinner(int xCount, int oCount) {
-        if (xCount > oCount) {
-            return LocationStatus.DARK;
-        } else if (xCount == oCount) {
-            return null;
-        } else {
-            return LocationStatus.LIGHT;
-        }
-    }
-
     private void throwExceptionOnInvalidMove(String move) {
         throw new GameException(String.format("Player '%s' move: %s\nInvalid move. Please try again.", turn, move));
     }
