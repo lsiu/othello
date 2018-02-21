@@ -1,10 +1,10 @@
-#Othello
+# Othello
 
-##Prerequisites
+## Prerequisites
 Please use JDK 8
 
-##To run application
+## To run application
 `mvnw spring-boot:run`
 
-##To run test
+## To run test
 `mvnw test`
