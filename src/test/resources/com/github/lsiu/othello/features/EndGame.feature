@@ -1,7 +1,7 @@
 Feature: End Game
 
   Scenario: Neither player can make move. Game ends
-    Given this is the state of the game and is BLACK's turn
+    Given this is the state of the game and is DARK's turn
     """
     1 --------
     2 ---O----
@@ -33,7 +33,7 @@ Feature: End Game
 
 
   Scenario: Game ends. Last move loses
-    Given this is the state of the game and is WHITE's turn
+    Given this is the state of the game and is LIGHT's turn
     """
     1 XXXXXXXX
     2 XXXXXXOX
@@ -65,7 +65,7 @@ Feature: End Game
 
 
   Scenario: Game ends. Last move wins
-    Given this is the state of the game and is BLACK's turn
+    Given this is the state of the game and is DARK's turn
     """
     1 XXXXXXXX
     2 XXXXXXOX
@@ -97,7 +97,7 @@ Feature: End Game
 
 
   Scenario: Game ends. Tie Game
-    Given this is the state of the game and is BLACK's turn
+    Given this is the state of the game and is DARK's turn
     """
     1 XOOOOOOO
     2 XOOOOOOO

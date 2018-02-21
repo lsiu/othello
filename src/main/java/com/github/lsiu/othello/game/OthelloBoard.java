@@ -14,10 +14,10 @@ public class OthelloBoard {
                 board[i][j] = LocationStatus.EMPTY;
             }
         }
-        board[3][3] = LocationStatus.WHITE;
-        board[4][4] = LocationStatus.WHITE;
-        board[3][4] = LocationStatus.BLACK;
-        board[4][3] = LocationStatus.BLACK;
+        board[3][3] = LocationStatus.LIGHT;
+        board[4][4] = LocationStatus.LIGHT;
+        board[3][4] = LocationStatus.DARK;
+        board[4][3] = LocationStatus.DARK;
     }
 
     public void mark(Location location, LocationStatus status) {

@@ -14,7 +14,7 @@ public class OthelloGame {
     private LocationStatus turn;
 
     public OthelloGame() {
-        this(new OthelloBoard(), LocationStatus.BLACK);
+        this(new OthelloBoard(), LocationStatus.DARK);
     }
 
     public OthelloGame(OthelloBoard board, LocationStatus turn) {
@@ -46,14 +46,14 @@ public class OthelloGame {
                 int xCount = CountPiecesUtils.count(board, LocationStatus.fromDisplayString("X"));
                 int oCount = CountPiecesUtils.count(board, LocationStatus.fromDisplayString("O"));
                 if (xCount > oCount) {
-                    throwWinningMessage(LocationStatus.BLACK, xCount, oCount, move);
+                    throwWinningMessage(LocationStatus.DARK, xCount, oCount, move);
                 } else if (xCount == oCount) {
                     String moveOutput = MoveDisplayUtils.generateMoveOutput(move, turn, board);
                     throw new GameException(String.format("%s\n\n" +
                             "No further moves available\n" +
                             "Game tied ( %s vs %s )", moveOutput, xCount, oCount));
                 } else {
-                    throwWinningMessage(LocationStatus.WHITE, oCount, xCount, move);
+                    throwWinningMessage(LocationStatus.LIGHT, oCount, xCount, move);
                 }
             }
         }
@@ -69,11 +69,11 @@ public class OthelloGame {
 
     private LocationStatus determineWinner(int xCount, int oCount) {
         if (xCount > oCount) {
-            return LocationStatus.BLACK;
+            return LocationStatus.DARK;
         } else if (xCount == oCount) {
             return null;
         } else {
-            return LocationStatus.WHITE;
+            return LocationStatus.LIGHT;
         }
     }
 

@@ -2,7 +2,7 @@ Feature: Invalid moves
 
   Scenario: Place piece in an occupied location is invalid
 
-    Given this is the state of the game and is WHITE's turn
+    Given this is the state of the game and is LIGHT's turn
     """
     1 --------
     2 ---O----

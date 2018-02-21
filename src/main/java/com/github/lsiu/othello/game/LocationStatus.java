@@ -3,7 +3,7 @@ package com.github.lsiu.othello.game;
 import java.util.Arrays;
 
 public enum LocationStatus {
-    EMPTY("-"), BLACK("X"), WHITE("O");
+    EMPTY("-"), DARK("X"), LIGHT("O");
 
     private final String display;
 
@@ -24,6 +24,6 @@ public enum LocationStatus {
     }
 
     public LocationStatus opposite() {
-        return this == BLACK ? WHITE : BLACK;
+        return this == DARK ? LIGHT : DARK;
     }
 }

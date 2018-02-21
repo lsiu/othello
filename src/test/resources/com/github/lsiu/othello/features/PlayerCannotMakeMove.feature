@@ -1,7 +1,7 @@
 Feature: Player cannot make move
 
   Scenario: Player cannot make move. Turn is passed to next player
-    Given this is the state of the game and is BLACK's turn
+    Given this is the state of the game and is DARK's turn
     """
     1 --------
     2 ---O----
@@ -29,4 +29,4 @@ Feature: Player cannot make move
 
     player O cannot make a move, back to X turn
     """
-    And it is BLACK's turn
+    And it is DARK's turn
