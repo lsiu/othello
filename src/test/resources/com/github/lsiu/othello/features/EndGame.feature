@@ -126,3 +126,35 @@ Feature: End Game
     No further moves available
     Game tied ( 32 vs 32 )
     """
+
+
+  Scenario: Game ends. Light Wins
+    Given this is the state of the game and is DARK's turn
+    """
+    1 OOOOOOOO
+    2 OOOOOOOO
+    3 OOOOOOOO
+    4 XOOOOOOO
+    5 OXXXXXXX
+    6 OXXXXXXO
+    7 -XXOXXXX
+    8 OXXOXXXX
+      abcdefgh
+    """
+    When move a7 command entered
+    And expect game exception with message:
+    """
+    Player 'X' move: a7
+    1 OOOOOOOO
+    2 OOOOOOOO
+    3 OOOOOOOO
+    4 XOOOOOOO
+    5 XXXXXXXX
+    6 XXXXXXXO
+    7 XXXOXXXX
+    8 OXXOXXXX
+      abcdefgh
+
+    No further moves available
+    Player 'O' wins ( 35 vs 29 )
+    """
