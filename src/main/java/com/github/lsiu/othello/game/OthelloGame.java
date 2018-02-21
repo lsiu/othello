@@ -1,5 +1,8 @@
 package com.github.lsiu.othello.game;
 
+import com.github.lsiu.othello.MoveDisplayUtils;
+import com.github.lsiu.othello.game.move.CanPlayMakeAMoveUtils;
+import com.github.lsiu.othello.game.move.CountPiecesUtils;
 import com.github.lsiu.othello.game.move.TurnSurroundingPiecesUtils;
 import lombok.Getter;
 
@@ -33,7 +36,20 @@ public class OthelloGame {
         }
         othelloBoard.mark(location, turn);
         board = othelloBoard;
-        turn = turn.opposite();
+        if (CanPlayMakeAMoveUtils.canPlayerMakeAMove(turn.opposite(), board)) {
+            turn = turn.opposite();
+        } else {
+            if (CanPlayMakeAMoveUtils.canPlayerMakeAMove(turn, board)) {
+                String moveOutput = MoveDisplayUtils.generateMoveOutput(move, turn, board);
+                throw new GameException(String.format("%s\n\nplayer %s cannot make a move, back to %s turn", moveOutput, turn.opposite(), turn));
+            } else {
+                String moveOutput = MoveDisplayUtils.generateMoveOutput(move, turn, board);
+                throw new GameException(String.format("%s\n\n" +
+                                "No further moves available\n" +
+                                "Player '%s' wins ( %s vs %s )", moveOutput, turn,
+                        CountPiecesUtils.count(board, turn), CountPiecesUtils.count(board, turn.opposite())));
+            }
+        }
     }
 
     private void throwExceptionOnInvalidMove(String move) {

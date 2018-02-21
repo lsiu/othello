@@ -24,6 +24,6 @@ public class GameController {
     public String move(String move) {
         LocationStatus player = othelloGame.getTurn();
         othelloGame.move(move);
-        return String.format("Player '%s' move: %s\n%s", player, move, othelloGame.getBoard().toString());
+        return MoveDisplayUtils.generateMoveOutput(move, player, othelloGame.getBoard());
     }
 }

@@ -22,11 +22,10 @@ public class StepsDefinition implements En {
 
 
     public StepsDefinition() {
-        Given("^this is the state of the game and is (.*) turn$", (LocationStatus turn, String board) -> {
-                    OthelloBoard othelloBoard = TestUtils.setupBoard(board);
-                    gameController.setOthelloGame(new OthelloGame(othelloBoard, turn));
-                }
-        );
+        Given("^this is the state of the game and is (.*)'s turn$", (LocationStatus turn, String board) -> {
+            OthelloBoard othelloBoard = TestUtils.setupBoard(board);
+            gameController.setOthelloGame(new OthelloGame(othelloBoard, turn));
+        });
 
         When("^(.*) command entered$", (String command) ->
                 shellResult = shell.evaluate(() -> command)
@@ -40,5 +39,9 @@ public class StepsDefinition implements En {
             Assert.assertThat(shellResult, CoreMatchers.instanceOf(GameException.class));
             Assert.assertThat(((GameException) shellResult).getMessage(), CoreMatchers.equalTo(message));
         });
+
+        Then("^it is (.*)'s turn$", (LocationStatus player) ->
+                Assert.assertThat(gameController.getOthelloGame().getTurn(), CoreMatchers.equalTo(player))
+        );
     }
 }
