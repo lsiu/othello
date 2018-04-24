@@ -27,7 +27,7 @@ public class CanPlayMakeAMoveUtils {
         return false;
     }
 
-    public static List<Direction> directionsPlayerCanMakeAMove(LocationStatus player, OthelloBoard board, Location location) {
+    static List<Direction> directionsPlayerCanMakeAMove(LocationStatus player, OthelloBoard board, Location location) {
         int row = location.getRow();
         int col = location.getCol();
 
