@@ -16,7 +16,6 @@ Feature: End Game
     When move d1 command entered
     And expect game exception with message:
     """
-    Player 'X' move: d1
     1 ---X----
     2 ---X----
     3 ---X----
@@ -48,7 +47,6 @@ Feature: End Game
     When move a7 command entered
     And expect game exception with message:
     """
-    Player 'O' move: a7
     1 XXXXXXXX
     2 XXXXXXOX
     3 XXXXXXXX
@@ -80,7 +78,6 @@ Feature: End Game
     When move a7 command entered
     And expect game exception with message:
     """
-    Player 'X' move: a7
     1 XXXXXXXX
     2 XXXXXXOX
     3 XXXXXXXX
@@ -112,7 +109,6 @@ Feature: End Game
     When move a7 command entered
     And expect game exception with message:
     """
-    Player 'X' move: a7
     1 XOOOOOOO
     2 XOOOOOOO
     3 XOOOOOOO
@@ -144,7 +140,6 @@ Feature: End Game
     When move a7 command entered
     And expect game exception with message:
     """
-    Player 'X' move: a7
     1 OOOOOOOO
     2 OOOOOOOO
     3 OOOOOOOO

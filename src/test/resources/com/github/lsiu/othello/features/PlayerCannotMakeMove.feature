@@ -16,7 +16,6 @@ Feature: Player cannot make move
     When move a5 command entered
     Then expect game exception with message:
     """
-    Player 'X' move: a5
     1 --------
     2 ---O----
     3 ---X----

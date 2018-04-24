@@ -16,7 +16,6 @@ Feature: Invalid moves
     When move d5 command entered
     Then expect game exception with message:
     """
-    Player 'O' move: d5
     Invalid move. Please try again.
     """
 
@@ -37,6 +36,5 @@ Feature: Invalid moves
     When move d9 command entered
     Then expect game exception with message:
     """
-    Player 'X' move: d9
     Invalid move. Please try again.
     """

@@ -13,4 +13,5 @@ Feature: New game
     7 --------
     8 --------
       abcdefgh
+
     """

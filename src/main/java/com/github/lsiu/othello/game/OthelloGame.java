@@ -1,6 +1,5 @@
 package com.github.lsiu.othello.game;
 
-import com.github.lsiu.othello.MoveDisplayUtils;
 import com.github.lsiu.othello.game.move.CanPlayMakeAMoveUtils;
 import com.github.lsiu.othello.game.move.CountPiecesUtils;
 import com.github.lsiu.othello.game.move.TurnSurroundingPiecesUtils;
@@ -13,7 +12,7 @@ public class OthelloGame {
     private OthelloBoard board;
     private LocationStatus turn;
 
-    public OthelloGame() {
+    OthelloGame() {
         this(new OthelloBoard(), LocationStatus.DARK);
     }
 
@@ -25,61 +24,66 @@ public class OthelloGame {
     public void move(String move) {
         Location location = convertLocation(move);
 
-        validateLocation(move, location);
+        validateLocation(location);
 
-        putPieceAtLocationIfPossible(move, location);
+        putPieceAtLocationIfPossible(location);
 
         if (CanPlayMakeAMoveUtils.canPlayerMakeAMove(turn.opposite(), board)) {
             turn = turn.opposite();
         } else {
             if (CanPlayMakeAMoveUtils.canPlayerMakeAMove(turn, board)) {
-                String moveOutput = MoveDisplayUtils.generateMoveOutput(move, turn, board);
-                throw new GameException(String.format("%s\n\nplayer %s cannot make a move, back to %s turn", moveOutput, turn.opposite(), turn));
+                throw new GameException(String.format("%s\n\nplayer %s cannot make a move, back to %s turn", board.toString(), turn.opposite(), turn));
             } else {
-                handleGameEnd(move);
+                handleGameEnd();
             }
         }
     }
 
-    private void putPieceAtLocationIfPossible(String move, Location location) {
+    private void putPieceAtLocationIfPossible(Location location) {
         OthelloBoard othelloBoard = board.copy();
         boolean piecesTurned = TurnSurroundingPiecesUtils.turnSurroundingPieces(othelloBoard, location, turn);
         if (!piecesTurned) {
-            MoveDisplayUtils.throwExceptionOnInvalidMove(move, turn);
+            throw new GameException("Invalid move. Please try again.");
         }
         othelloBoard.mark(location, turn);
         board = othelloBoard;
     }
 
-    private void validateLocation(String move, Location location) {
+    private void validateLocation(Location location) {
         if (board.get(location) != LocationStatus.EMPTY) {
-            MoveDisplayUtils.throwExceptionOnInvalidMove(move, turn);
+            throw new GameException("Invalid move. Please try again.");
         }
     }
 
     private Location convertLocation(String move) {
-        Location location = null;
+        Location location;
         try {
             location = locationConverter.convert(move);
         } catch (Exception e) {
-            MoveDisplayUtils.throwExceptionOnInvalidMove(move, turn);
+            throw new GameException("Invalid move. Please try again.");
         }
         return location;
     }
 
-    private void handleGameEnd(String move) {
+    private void handleGameEnd() {
         int xCount = CountPiecesUtils.count(board, LocationStatus.fromDisplayString("X"));
         int oCount = CountPiecesUtils.count(board, LocationStatus.fromDisplayString("O"));
         if (xCount > oCount) {
-            MoveDisplayUtils.throwWinningMessage(LocationStatus.DARK, xCount, oCount, move, turn, board);
+            throwGameWonException(LocationStatus.DARK, xCount, oCount, board);
         } else if (xCount == oCount) {
-            String moveOutput = MoveDisplayUtils.generateMoveOutput(move, turn, board);
             throw new GameException(String.format("%s\n\n" +
                     "No further moves available\n" +
-                    "Game tied ( %s vs %s )", moveOutput, xCount, oCount));
+                    "Game tied ( %s vs %s )", board.toString(), xCount, oCount));
         } else {
-            MoveDisplayUtils.throwWinningMessage(LocationStatus.LIGHT, oCount, xCount, move, turn, board);
+            throwGameWonException(LocationStatus.LIGHT, oCount, xCount, board);
         }
+    }
+
+    private void throwGameWonException(LocationStatus winner, int winnerCount, int loserCount, OthelloBoard board) {
+        throw new GameException(String.format("%s\n\n" +
+                        "No further moves available\n" +
+                        "Player '%s' wins ( %s vs %s )", board.toString(), winner,
+                winnerCount, loserCount));
     }
 
 
