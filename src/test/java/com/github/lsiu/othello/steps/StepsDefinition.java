@@ -1,6 +1,5 @@
 package com.github.lsiu.othello.steps;
 
-import com.github.lsiu.othello.GameController;
 import com.github.lsiu.othello.game.*;
 import cucumber.api.java8.En;
 import org.hamcrest.CoreMatchers;
@@ -16,7 +15,7 @@ public class StepsDefinition implements En {
     private Shell shell;
 
     @Autowired
-    private GameController gameController;
+    private GameRepository gameRepository;
 
     private Object shellResult;
 
@@ -24,7 +23,7 @@ public class StepsDefinition implements En {
     public StepsDefinition() {
         Given("^this is the state of the game and is (.*)'s turn$", (LocationStatus turn, String board) -> {
             OthelloBoard othelloBoard = TestUtils.setupBoard(board);
-            gameController.setOthelloGame(new OthelloGame(othelloBoard, turn));
+            gameRepository.setCurrentGameTo(new OthelloGame(othelloBoard, turn));
         });
 
         When("^(.*) command entered$", (String command) ->
@@ -41,7 +40,7 @@ public class StepsDefinition implements En {
         });
 
         Then("^it is (.*)'s turn$", (LocationStatus player) ->
-                Assert.assertThat(gameController.getOthelloGame().getTurn(), CoreMatchers.equalTo(player))
+                Assert.assertThat(gameRepository.getTheOnlyGame().getTurn(), CoreMatchers.equalTo(player))
         );
     }
 }
